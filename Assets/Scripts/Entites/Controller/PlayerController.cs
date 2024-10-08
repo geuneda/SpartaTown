@@ -1,8 +1,16 @@
+using Cinemachine;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
+
     private string playerNickname;
+
+    private void Awake()
+    {
+        
+    }
 
     private void Start()
     {

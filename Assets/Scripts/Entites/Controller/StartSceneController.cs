@@ -9,6 +9,7 @@ public class StartSceneController : MonoBehaviour
 {
     [SerializeField] private TMP_InputField nicknameInput;
     [SerializeField] private TextMeshProUGUI errorMessage;
+    [SerializeField] GameObject characterPanel;
 
     public void OnStartButtonClicked()
     {
@@ -25,7 +26,7 @@ public class StartSceneController : MonoBehaviour
         else
         {
             GameManager.Instance.SetPlayerNickname(nickname);
-            SceneManager.LoadScene("MainScene");
+            characterPanel.SetActive(true);
         }
     }
 
