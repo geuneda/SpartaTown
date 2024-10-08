@@ -21,13 +21,9 @@ public class PlayerInputController : SpartaTownController
     public void OnLook(InputValue value)
     {
         Vector2 screenPos = value.Get<Vector2>();
-        Vector2 worldPos = _camera.WorldToScreenPoint(screenPos);
+        Vector2 worldPos = _camera.ScreenToWorldPoint(screenPos);
         Vector2 direction = (worldPos - (Vector2)transform.position).normalized;
-
-        if(direction.magnitude >= .1f)
-        {
-            CallLookEvent(direction);
-        }
+        CallLookEvent(direction);
     }
 
 }
