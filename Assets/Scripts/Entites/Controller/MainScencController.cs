@@ -1,4 +1,5 @@
 using Cinemachine;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
@@ -7,6 +8,7 @@ public class MainSceneController : MonoBehaviour
     [SerializeField] private GameObject Character1Prefab;
     [SerializeField] private GameObject Character2Prefab;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private NameChanger nameChanger;
 
     GameObject characterInstance = null;
 
@@ -30,6 +32,19 @@ public class MainSceneController : MonoBehaviour
         {
             virtualCamera.Follow = characterInstance.transform;
             virtualCamera.LookAt = characterInstance.transform;
+        }
+
+        if (characterInstance != null && nameChanger != null)
+        {
+            TextMeshProUGUI nicknameText = characterInstance.GetComponentInChildren<TextMeshProUGUI>();
+            if (nicknameText != null)
+            {
+                nameChanger.SetNicknameText(nicknameText);
+            }
+            else
+            {
+                Debug.Log("MainSceneController : Nickname오브젝트를 찾을 수 없음");
+            }
         }
     }
 }

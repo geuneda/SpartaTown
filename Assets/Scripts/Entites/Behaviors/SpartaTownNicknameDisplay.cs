@@ -1,20 +1,24 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class SpartaTownNicknameDisplay : MonoBehaviour
 {
-    [SerializeField] private Text nicknameText;
+    public TextMeshProUGUI nicknameText;
 
     private void Awake()
     {
         if (GameManager.Instance != null)
         {
-            string nickname = GameManager.Instance.PlayerNickname;
-            nicknameText.text = nickname;
+            SetName();
         }
         else
         {
             Debug.LogError("게임매니저를 인식할 수 없습니다.");
         }
+    }
+
+    public void SetName()
+    {
+        nicknameText.text = GameManager.Instance.PlayerNickname;
     }
 }
