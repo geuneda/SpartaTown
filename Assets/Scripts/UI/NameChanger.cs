@@ -22,8 +22,10 @@ public class NameChanger : MonoBehaviour
 
     private void Start()
     {
-        nickNameChangePanel.gameObject.SetActive(false);
-
+        if (nickNameChangePanel)
+        {
+            nickNameChangePanel.gameObject.SetActive(false);
+        }
         changeNameButton.onClick.AddListener(OnChangeNameButtonClicked);
         confirmButton.onClick.AddListener(OnConfirmButtonClicked);
     }

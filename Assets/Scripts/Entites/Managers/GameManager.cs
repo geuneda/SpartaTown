@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {  get; private set; }
     //0∆Î±œ 1≥Ø∑•¿Ã
-    public int SelectedCharacterIndex { get; private set; }
+    public int SelectedCharacterIndex { get; set; }
     
     public string PlayerNickname {  get; private set; }
 

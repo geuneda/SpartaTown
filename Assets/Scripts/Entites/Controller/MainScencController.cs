@@ -2,6 +2,7 @@ using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using UnityEngine.UI;
 
 public class MainSceneController : MonoBehaviour
 {
@@ -9,42 +10,68 @@ public class MainSceneController : MonoBehaviour
     [SerializeField] private GameObject Character2Prefab;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private NameChanger nameChanger;
+    [SerializeField] private Button changeCharacterButton;
 
     GameObject characterInstance = null;
+    private int currentCharacterIndex = 0;
 
     private void Awake()
     {
-        int selectedCharacterIndex = GameManager.Instance.SelectedCharacterIndex;
-
-        if (selectedCharacterIndex == 0)
-        {
-            characterInstance = Instantiate(Character1Prefab, transform.position, Quaternion.identity);
-        }
-        else if (selectedCharacterIndex == 1)
-        {
-            characterInstance = Instantiate(Character2Prefab, transform.position, Quaternion.identity);
-        }
+        currentCharacterIndex = GameManager.Instance.SelectedCharacterIndex;
+        
+        InstantiateCharacter(currentCharacterIndex, transform.position);
     }
 
     private void Start()
     {
-        if (characterInstance != null && virtualCamera != null)
+        if (changeCharacterButton != null)
+        {
+            changeCharacterButton.onClick.AddListener(SwitchCharacter);
+        }
+    }
+    
+    private void InstantiateCharacter(int characterIndex, Vector3 spawnPostion)
+    {
+        if (characterInstance != null)
+        {
+            Destroy(characterInstance);
+        }
+
+        if (characterIndex == 0)
+        {
+            characterInstance = Instantiate(Character1Prefab, spawnPostion, Quaternion.identity);
+        }
+        else if (characterIndex == 1)
+        {
+            characterInstance = Instantiate(Character2Prefab, spawnPostion, Quaternion.identity);
+        }
+
+        if (characterInstance != null)
         {
             virtualCamera.Follow = characterInstance.transform;
             virtualCamera.LookAt = characterInstance.transform;
-        }
 
-        if (characterInstance != null && nameChanger != null)
-        {
             TextMeshProUGUI nicknameText = characterInstance.GetComponentInChildren<TextMeshProUGUI>();
-            if (nicknameText != null)
+            if (nicknameText != null && nameChanger != null)
             {
                 nameChanger.SetNicknameText(nicknameText);
             }
             else
             {
-                Debug.Log("MainSceneController : Nickname오브젝트를 찾을 수 없음");
+                Debug.Log("MainSceneController (Nickname혹은 nameChanger이 null임)");
             }
         }
+    }
+
+    private void SwitchCharacter()
+    {
+        //위치저장
+        Vector3 currentPosition = characterInstance != null ? characterInstance.transform.position : transform.position;
+        // 0과 1을 반복
+        currentCharacterIndex = (currentCharacterIndex + 1) % 2;
+
+        InstantiateCharacter(currentCharacterIndex, currentPosition);
+
+        GameManager.Instance.SelectedCharacterIndex = currentCharacterIndex;
     }
 }
