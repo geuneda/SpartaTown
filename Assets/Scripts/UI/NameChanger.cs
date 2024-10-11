@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class NameChanger : MonoBehaviour
 {
@@ -22,12 +23,17 @@ public class NameChanger : MonoBehaviour
 
     private void Start()
     {
-        if (nickNameChangePanel)
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (currentSceneName == "MainScene")
         {
-            nickNameChangePanel.gameObject.SetActive(false);
+            if (nickNameChangePanel)
+            {
+                nickNameChangePanel.gameObject.SetActive(false);
+            }
+            changeNameButton.onClick.AddListener(OnChangeNameButtonClicked);
+            confirmButton.onClick.AddListener(OnConfirmButtonClicked);
         }
-        changeNameButton.onClick.AddListener(OnChangeNameButtonClicked);
-        confirmButton.onClick.AddListener(OnConfirmButtonClicked);
     }
 
     public void OnChangeNameButtonClicked()
