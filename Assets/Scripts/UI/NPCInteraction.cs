@@ -17,17 +17,22 @@ public class NPCInteraction : MonoBehaviour
 
     private void Start()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        LoadPlayerTag();
+
+        closeButton.onClick.AddListener(CloseDialoguePanel);
+        interactionText.gameObject.SetActive(false);
+        dialoguePanel.SetActive(false);
+        dialogueText.SetActive(false);
+    }
+
+    public void LoadPlayerTag()
+    {
+        GameObject player = GameManager.Instance.PlayerInstance;
+
         if (player != null)
         {
             playerTransform = player.transform;
         }
-
-        closeButton.onClick.AddListener(CloseDialoguePanel);
-
-        interactionText.gameObject.SetActive(false);
-        dialoguePanel.SetActive(false);
-        dialogueText.SetActive(false);
     }
 
     private void CloseDialoguePanel()
@@ -40,7 +45,7 @@ public class NPCInteraction : MonoBehaviour
     {
         if (playerTransform == null)
         {
-            return;
+            LoadPlayerTag();
         }
 
         float distance = Vector3.Distance(playerTransform.position, transform.position);

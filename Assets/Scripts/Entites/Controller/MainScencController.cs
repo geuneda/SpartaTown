@@ -11,12 +11,14 @@ public class MainSceneController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private NameChanger nameChanger;
     [SerializeField] private Button changeCharacterButton;
+    NPCInteraction nPCInteraction;
 
     GameObject characterInstance = null;
     private int currentCharacterIndex = 0;
 
     private void Awake()
     {
+        nPCInteraction = GetComponent<NPCInteraction>();
         currentCharacterIndex = GameManager.Instance.SelectedCharacterIndex;
         
         InstantiateCharacter(currentCharacterIndex, transform.position);
@@ -46,6 +48,8 @@ public class MainSceneController : MonoBehaviour
             characterInstance = Instantiate(Character2Prefab, spawnPostion, Quaternion.identity);
         }
 
+        GameManager.Instance.SetPlayerInstance(characterInstance);
+
         if (characterInstance != null)
         {
             virtualCamera.Follow = characterInstance.transform;
@@ -73,5 +77,6 @@ public class MainSceneController : MonoBehaviour
         InstantiateCharacter(currentCharacterIndex, currentPosition);
 
         GameManager.Instance.SelectedCharacterIndex = currentCharacterIndex;
+
     }
 }

@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {  get; private set; }
     //0∆Î±œ 1≥Ø∑•¿Ã
     public int SelectedCharacterIndex { get; set; }
-    
+
+    public GameObject PlayerInstance { get; private set; }
+
     public string PlayerNickname {  get; private set; }
 
     private void Awake()
@@ -31,5 +33,10 @@ public class GameManager : MonoBehaviour
     public void SetselectedCharacterIndex(int index)
     {
         SelectedCharacterIndex = index;
+    }
+
+    public void SetPlayerInstance(GameObject player)
+    {
+        PlayerInstance = player;
     }
 }
